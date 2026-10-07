@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar — My Daily Journal</title>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <!-- BRAND -->
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">
+                ✦
+            </div>
+
+            <div class="brand-text">
+                <div class="brand-name">
+                    My Daily Journal
+                </div>
+
+                <div class="brand-subtitle">
+                    Personal Space
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-nav">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}"
+            >
+                <span class="nav-icon">⌂</span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('new_entry') }}"
+                class="nav-item {% if request.endpoint == 'new_entry' %}active{% endif %}"
+            >
+                <span class="nav-icon">＋</span>
+                <span class="nav-label">New Entry</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('entries') }}"
+                class="nav-item {% if request.endpoint == 'entries' %}active{% endif %}"
+            >
+                <span class="nav-icon">☷</span>
+                <span class="nav-label">All Entries</span>
+            </a>
+
+        </nav>
+
+
+        <!-- BOTTOM SECTION -->
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="nav-item logout-item"
+                onclick="return confirm('Are you sure you want to log out?');"
+            >
+                <span class="nav-icon">↪</span>
+                <span class="nav-label">Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+</body>
+</html>

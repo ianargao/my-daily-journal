@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Daily Journal</title>
+
+```
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg: #070b14;
+        --bg-soft: #0b1020;
+        --card: rgba(17, 24, 39, 0.78);
+        --card-solid: #111827;
+        --border: rgba(148, 163, 184, 0.13);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --primary: #7c5cff;
+        --primary-dark: #6045e8;
+        --blue: #38bdf8;
+        --shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+        color: var(--text);
+        background:
+            radial-gradient(circle at 15% 10%, rgba(124, 92, 255, 0.16), transparent 30%),
+            radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.10), transparent 28%),
+            linear-gradient(135deg, #070b14 0%, #090e1b 50%, #070b14 100%);
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .container {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+        position: relative;
+        z-index: 10;
+        padding: 24px 0;
+    }
+
+    .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .brand-icon {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), #4f8cff);
+        box-shadow: 0 10px 30px rgba(124, 92, 255, 0.25);
+        font-size: 17px;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-link {
+        color: #cbd5e1;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 10px 15px;
+        border-radius: 10px;
+        transition: 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-login {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.035);
+    }
+
+    .nav-register {
+        color: white;
+        background: linear-gradient(135deg, var(--primary), #4f8cff);
+        box-shadow: 0 8px 25px rgba(124, 92, 255, 0.20);
+    }
+
+    /* HERO */
+
+    .hero {
+        min-height: 650px;
+        display: flex;
+        align-items: center;
+        padding: 60px 0 100px;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: center;
+        gap: 70px;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid rgba(124, 92, 255, 0.22);
+        border-radius: 999px;
+        background: rgba(124, 92, 255, 0.08);
+        color: #c4b5fd;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 22px;
+    }
+
+    .badge-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #8b7cff;
+        box-shadow: 0 0 12px #8b7cff;
+    }
+
+    .hero h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 1.02;
+        letter-spacing: -2.5px;
+        margin-bottom: 24px;
+    }
+
+    .gradient-text {
+        background: linear-gradient(90deg, #a78bfa, #60a5fa, #38bdf8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .hero-description {
+        max-width: 570px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 13px 19px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.25s ease;
+    }
+
+    .btn-primary {
+        color: white;
+        background: linear-gradient(135deg, var(--primary), #4f8cff);
+        box-shadow: 0 12px 35px rgba(124, 92, 255, 0.22);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 40px rgba(124, 92, 255, 0.32);
+    }
+
+    .btn-secondary {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.035);
+        color: #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.07);
+        transform: translateY(-2px);
+    }
+
+    /* DIARY MOCKUP */
+
+    .preview-wrapper {
+        position: relative;
+    }
+
+    .glow {
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(124, 92, 255, 0.20);
+        filter: blur(80px);
+        pointer-events: none;
+    }
+
+    .dashboard-preview {
+        position: relative;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.84);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        backdrop-filter: blur(18px);
+        transform: rotate(1.5deg);
+        transition: 0.4s ease;
+    }
+
+    .dashboard-preview:hover {
+        transform: rotate(0deg) translateY(-5px);
+    }
+
+    .preview-top {
+        height: 46px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .window-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #475569;
+    }
+
+    .preview-content {
+        display: grid;
+        grid-template-columns: 75px 1fr;
+        min-height: 360px;
+    }
+
+    .preview-sidebar {
+        border-right: 1px solid var(--border);
+        padding: 18px 10px;
+    }
+
+    .mini-logo {
+        width: 35px;
+        height: 35px;
+        margin: 0 auto 24px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), #4f8cff);
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .mini-nav {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        margin: 9px auto;
+        background: rgba(255, 255, 255, 0.035);
+    }
+
+    .mini-nav.active {
+        background: rgba(124, 92, 255, 0.20);
+    }
+
+    .preview-main {
+        padding: 22px;
+    }
+
+    .preview-heading {
+        margin-bottom: 18px;
+    }
+
+    .preview-heading small {
+        color: #64748b;
+        font-size: 9px;
+    }
+
+    .preview-heading h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 20px;
+        margin-top: 4px;
+    }
+
+    .mini-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .mini-card {
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .mini-card span {
+        display: block;
+        color: #64748b;
+        font-size: 8px;
+        margin-bottom: 5px;
+    }
+
+    .mini-card strong {
+        font-size: 18px;
+    }
+
+    .preview-entry {
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        margin-top: 10px;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .entry-line {
+        width: 75%;
+        height: 7px;
+        border-radius: 10px;
+        background: #334155;
+        margin-bottom: 8px;
+    }
+
+    .entry-line.short {
+        width: 45%;
+        height: 5px;
+        background: #1e293b;
+    }
+
+    /* FEATURES */
+
+    .features {
+        padding: 40px 0 110px;
+    }
+
+    .section-heading {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 45px;
+    }
+
+    .section-heading h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    .section-heading p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .feature-card {
+        padding: 25px;
+        border: 1px solid var(--border);
+        border-radius: 17px;
+        background: rgba(17, 24, 39, 0.55);
+        transition: 0.25s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(124, 92, 255, 0.25);
+        background: rgba(17, 24, 39, 0.8);
+    }
+
+    .feature-icon {
+        width: 43px;
+        height: 43px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        background: rgba(124, 92, 255, 0.12);
+        color: #a78bfa;
+        font-size: 19px;
+    }
+
+    .feature-card h3 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 17px;
+        margin-bottom: 9px;
+    }
+
+    .feature-card p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    /* CTA */
+
+    .cta {
+        padding: 0 0 90px;
+    }
+
+    .cta-card {
+        position: relative;
+        overflow: hidden;
+        padding: 55px 35px;
+        text-align: center;
+        border: 1px solid rgba(124, 92, 255, 0.18);
+        border-radius: 22px;
+        background:
+            radial-gradient(circle at 50% 0%, rgba(124, 92, 255, 0.16), transparent 45%),
+            rgba(17, 24, 39, 0.65);
+    }
+
+    .cta-card h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .cta-card p {
+        max-width: 530px;
+        margin: 0 auto 25px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    /* FOOTER */
+
+    footer {
+        border-top: 1px solid var(--border);
+        padding: 25px 0;
+    }
+
+    .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .footer-brand {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .footer-text {
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+        .hero {
+            padding-top: 35px;
+        }
+
+        .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 55px;
+        }
+
+        .hero-copy {
+            text-align: center;
+        }
+
+        .hero-description {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            justify-content: center;
+        }
+
+        .preview-wrapper {
+            max-width: 620px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .feature-grid {
+            grid-template-columns: 1fr;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            width: min(100% - 28px, 1120px);
+        }
+
+        .navbar {
+            padding: 17px 0;
+        }
+
+        .nav-links .nav-link:not(.nav-login):not(.nav-register) {
+            display: none;
+        }
+
+        .nav-login,
+        .nav-register {
+            padding: 9px 11px;
+            font-size: 12px;
+        }
+
+        .brand {
+            font-size: 16px;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .hero {
+            min-height: auto;
+            padding: 55px 0 75px;
+        }
+
+        .hero h1 {
+            font-size: 43px;
+            letter-spacing: -1.7px;
+        }
+
+        .hero-description {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .dashboard-preview {
+            transform: none;
+        }
+
+        .preview-content {
+            grid-template-columns: 58px 1fr;
+        }
+
+        .preview-sidebar {
+            padding: 15px 7px;
+        }
+
+        .preview-main {
+            padding: 15px;
+        }
+
+        .mini-stats {
+            gap: 6px;
+        }
+
+        .mini-card {
+            padding: 9px;
+        }
+
+        .section-heading h2 {
+            font-size: 28px;
+        }
+
+        .cta-card {
+            padding: 40px 20px;
+        }
+
+        .cta-card h2 {
+            font-size: 27px;
+        }
+
+        .footer-inner {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="container nav-inner">
+
+        <a href="{{ url_for('index') }}" class="brand">
+            <span class="brand-icon">✦</span>
+            <span>My Daily Journal</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="{{ url_for('login') }}" class="nav-link nav-login">Login</a>
+            <a href="{{ url_for('register') }}" class="nav-link nav-register">Get Started</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- HERO -->
+<main>
+
+    <section class="hero">
+        <div class="container hero-grid">
+
+            <div class="hero-copy">
+
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    Your personal space for every day
+                </div>
+
+                <h1>
+                    Your thoughts.<br>
+                    Your <span class="gradient-text">story.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Keep your everyday memories, thoughts, moods, and experiences
+                    organized in one simple and private digital journal.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">
+                        Get Started
+                        <span>→</span>
+                    </a>
+
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">
+                        Sign In
+                    </a>
+                </div>
+
+            </div>
+
+
+            <!-- DASHBOARD PREVIEW -->
+            <div class="preview-wrapper">
+
+                <div class="glow"></div>
+
+                <div class="dashboard-preview">
+
+                    <div class="preview-top">
+                        <span class="window-dot"></span>
+                        <span class="window-dot"></span>
+                        <span class="window-dot"></span>
+                    </div>
+
+                    <div class="preview-content">
+
+                        <div class="preview-sidebar">
+
+                            <div class="mini-logo">J</div>
+
+                            <div class="mini-nav active"></div>
+                            <div class="mini-nav"></div>
+                            <div class="mini-nav"></div>
+                            <div class="mini-nav"></div>
+
+                        </div>
+
+                        <div class="preview-main">
+
+                            <div class="preview-heading">
+                                <small>YOUR JOURNAL</small>
+                                <h3>Good evening 👋</h3>
+                            </div>
+
+                            <div class="mini-stats">
+
+                                <div class="mini-card">
+                                    <span>ENTRIES</span>
+                                    <strong>24</strong>
+                                </div>
+
+                                <div class="mini-card">
+                                    <span>THIS MONTH</span>
+                                    <strong>8</strong>
+                                </div>
+
+                                <div class="mini-card">
+                                    <span>MOOD</span>
+                                    <strong>😊</strong>
+                                </div>
+
+                            </div>
+
+                            <div class="preview-entry">
+                                <div class="entry-line"></div>
+                                <div class="entry-line short"></div>
+                            </div>
+
+                            <div class="preview-entry">
+                                <div class="entry-line"></div>
+                                <div class="entry-line short"></div>
+                            </div>
+
+                            <div class="preview-entry">
+                                <div class="entry-line"></div>
+                                <div class="entry-line short"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <h2>Everything you need to journal</h2>
+
+                <p>
+                    A clean and simple journal designed to make recording
+                    your everyday life easy.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">✎</div>
+
+                    <h3>Write Freely</h3>
+
+                    <p>
+                        Create diary entries whenever you want and
+                        keep your thoughts in one organized place.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">◷</div>
+
+                    <h3>Track Your Days</h3>
+
+                    <p>
+                        Add dates and moods to your entries so you can
+                        easily look back on your experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">⌁</div>
+
+                    <h3>Stay Organized</h3>
+
+                    <p>
+                        View, edit, and manage your previous journal
+                        entries through a simple dashboard.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+
+        <div class="container">
+
+            <div class="cta-card">
+
+                <h2>Start writing your story.</h2>
+
+                <p>
+                    Create your account and start keeping track of
+                    the moments that matter to you.
+                </p>
+
+                <a href="{{ url_for('register') }}" class="btn btn-primary">
+                    Create Your Journal
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container footer-inner">
+
+        <div class="footer-brand">
+            My Daily Journal
+        </div>
+
+        <div class="footer-text">
+            A simple place for your everyday thoughts.
+        </div>
+
+        <div class="footer-text">
+            © 2026 My Daily Journal
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if mode == 'new' %}
+        New Entry — My Diary
+    {% else %}
+        Edit Entry — My Diary
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="app-shell">
+
+    {% include "_sidebar.html" %}
+
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                {% if mode == 'new' %}
+
+                    <h1>New Entry</h1>
+
+                    <p>
+                        Write down your thoughts and memories.
+                    </p>
+
+                {% else %}
+
+                    <h1>Edit Entry</h1>
+
+                    <p>
+                        Update your diary entry.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                >
+
+                    <span class="theme-icon">
+                        ☾
+                    </span>
+
+                    <span class="theme-text">
+                        Dark
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- FLASH MESSAGE -->
+
+        {% include "_flash.html" %}
+
+
+        <!-- ENTRY FORM -->
+
+        <section class="form-card">
+
+            <!--
+                No action attribute is needed.
+
+                New Entry:
+                /new-entry
+
+                Edit Entry:
+                /entry/<id>/edit
+
+                The browser submits to whichever URL
+                the user is currently viewing.
+            -->
+
+            <form method="POST">
+
+
+                <!-- DATE -->
+
+                <div class="form-group">
+
+                    <label for="entry_date">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="entry_date"
+                        name="entry_date"
+                        value="{% if entry %}{{ entry.entry_date }}{% endif %}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Give your entry a title"
+                        value="{% if entry %}{{ entry.title }}{% endif %}"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MOOD -->
+
+                <div class="form-group">
+
+                    <label for="mood">
+                        Mood
+                    </label>
+
+                    <select
+                        id="mood"
+                        name="mood"
+                        required
+                    >
+
+                        <option value="">
+                            Select your mood
+                        </option>
+
+                        <option
+                            value="Happy"
+                            {% if entry and entry.mood == 'Happy' %}
+                                selected
+                            {% endif %}
+                        >
+                            Happy
+                        </option>
+
+                        <option
+                            value="Excited"
+                            {% if entry and entry.mood == 'Excited' %}
+                                selected
+                            {% endif %}
+                        >
+                            Excited
+                        </option>
+
+                        <option
+                            value="Calm"
+                            {% if entry and entry.mood == 'Calm' %}
+                                selected
+                            {% endif %}
+                        >
+                            Calm
+                        </option>
+
+                        <option
+                            value="Sad"
+                            {% if entry and entry.mood == 'Sad' %}
+                                selected
+                            {% endif %}
+                        >
+                            Sad
+                        </option>
+
+                        <option
+                            value="Angry"
+                            {% if entry and entry.mood == 'Angry' %}
+                                selected
+                            {% endif %}
+                        >
+                            Angry
+                        </option>
+
+                        <option
+                            value="Tired"
+                            {% if entry and entry.mood == 'Tired' %}
+                                selected
+                            {% endif %}
+                        >
+                            Tired
+                        </option>
+
+                        <option
+                            value="Anxious"
+                            {% if entry and entry.mood == 'Anxious' %}
+                                selected
+                            {% endif %}
+                        >
+                            Anxious
+                        </option>
+
+                        <option
+                            value="Neutral"
+                            {% if entry and entry.mood == 'Neutral' %}
+                                selected
+                            {% endif %}
+                        >
+                            Neutral
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CONTENT -->
+
+                <div class="form-group">
+
+                    <label for="content">
+                        Your Thoughts
+                    </label>
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        rows="10"
+                        placeholder="Write about your day, thoughts, memories, or anything you want to remember..."
+                        required
+                    >{% if entry %}{{ entry.content }}{% endif %}</textarea>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+
+                    {% if mode == 'new' %}
+
+                        <a
+                            class="secondary-btn"
+                            href="{{ url_for('dashboard') }}"
+                        >
+                            Cancel
+                        </a>
+
+                    {% else %}
+
+                        {% if entry %}
+
+                            <a
+                                class="secondary-btn"
+                                href="{{ url_for('view_entry', entry_id=entry.entry_id) }}"
+                            >
+                                Cancel
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                class="secondary-btn"
+                                href="{{ url_for('dashboard') }}"
+                            >
+                                Cancel
+                            </a>
+
+                        {% endif %}
+
+                    {% endif %}
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+
+                        {% if mode == 'new' %}
+                            Save Entry
+                        {% else %}
+                            Update Entry
+                        {% endif %}
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

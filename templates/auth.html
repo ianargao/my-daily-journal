@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="auth-page">
+    <div class="auth-visual">
+        <div class="visual-overlay"></div>
+        <div class="visual-content">
+            <div class="book-icon">▢</div>
+            <h1>My Diary</h1>
+            <p>Small thoughts. Big dreams.</p>
+            <div class="visual-line"></div>
+            <span>A simple and private place to write your thoughts, keep your memories, and track your journey.</span>
+        </div>
+    </div>
+    <div class="auth-form-area">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block auth_form %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

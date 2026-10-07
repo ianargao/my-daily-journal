@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+All Entries — My Diary
+{% endblock %}
+
+{% block body %}
+
+<div class="app-shell">
+
+    {% include "_sidebar.html" %}
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>All Entries</h1>
+
+                <p>
+                    Your personal collection of memories and thoughts
+                </p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                >
+                    <span class="theme-icon">☾</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+
+                <a
+                    class="primary-btn"
+                    href="{{ url_for('new_entry') }}"
+                >
+                    ＋ New Entry
+                </a>
+
+            </div>
+
+        </header>
+
+
+        {% include "_flash.html" %}
+
+
+        <section class="content-card">
+
+            {% if entries %}
+
+                <div class="entry-list">
+
+                    {% for entry in entries %}
+
+                        <a
+                            class="entry-row"
+                            href="{{ url_for('view_entry', entry_id=entry.entry_id) }}"
+                        >
+
+                            <div class="entry-date">
+                                {{ entry.entry_date|prettydate }}
+                            </div>
+
+
+                            <div class="entry-info">
+
+                                <strong>
+                                    {{ entry.title }}
+                                </strong>
+
+                                <p>
+                                    {{ entry.content|truncate(80) }}
+                                </p>
+
+                            </div>
+
+
+                            <span class="mood {{ entry.mood|lower }}">
+                                {{ entry.mood }}
+                            </span>
+
+
+                            <span class="arrow">
+                                ›
+                            </span>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div>✎</div>
+
+                    <h3>
+                        No entries yet
+                    </h3>
+
+                    <p>
+                        Your saved diary entries will appear here.
+                    </p>
+
+                    <a
+                        class="primary-btn"
+                        href="{{ url_for('new_entry') }}"
+                    >
+                        Write Your First Entry
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard — My Diary
+{% endblock %}
+
+
+{% block body %}
+
+<div class="app-shell">
+
+    {% include "_sidebar.html" %}
+
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Hello, {{ session.username }}! <span>👋</span>
+                </h1>
+
+                <p>
+                    Here's your diary overview
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <!-- DASHBOARD DARK / LIGHT MODE -->
+
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                >
+
+                    <span class="theme-icon">
+                        ☾
+                    </span>
+
+                    <span class="theme-text">
+                        Dark
+                    </span>
+
+                </button>
+
+
+                <!-- PROFILE -->
+
+                <div class="profile-chip">
+
+                    <span>
+                        {{ session.username[:2].upper() }}
+                    </span>
+
+                    {{ session.username }}⌄
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- FLASH MESSAGE -->
+
+        {% include "_flash.html" %}
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card purple">
+
+                <div class="stat-icon">
+                    ▣
+                </div>
+
+                <small>
+                    Total Entries
+                </small>
+
+                <strong>
+                    {{ total }}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card green">
+
+                <div class="stat-icon">
+                    ▦
+                </div>
+
+                <small>
+                    This Month
+                </small>
+
+                <strong>
+                    {{ this_month }}
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card blue">
+
+                <div class="stat-icon">
+                    ☺
+                </div>
+
+                <small>
+                    Most Common Mood
+                </small>
+
+                <strong>
+                    {{ common_mood }}
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT ENTRIES -->
+
+        <section class="content-card">
+
+            <div class="section-title">
+
+                <h2>
+                    Recent Entries
+                </h2>
+
+                <a href="{{ url_for('entries') }}">
+                    View All
+                </a>
+
+            </div>
+
+
+            {% if entries %}
+
+                <div class="entry-list">
+
+                    {% for entry in entries %}
+
+                        <a
+                            class="entry-row"
+                            href="{{ url_for('view_entry', entry_id=entry.entry_id) }}"
+                        >
+
+                            <div class="entry-date">
+
+                                {{ entry.entry_date|prettydate }}
+
+                            </div>
+
+
+                            <div class="entry-info">
+
+                                <strong>
+                                    {{ entry.title }}
+                                </strong>
+
+                                <p>
+                                    {{ entry.content|truncate(65) }}
+                                </p>
+
+                            </div>
+
+
+                            <span class="mood {{ entry.mood|lower }}">
+                                {{ entry.mood }}
+                            </span>
+
+
+                            <span class="arrow">
+                                ›
+                            </span>
+
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div>
+                        ✎
+                    </div>
+
+                    <h3>
+                        No diary entries yet
+                    </h3>
+
+                    <p>
+                        Start writing your first thought today.
+                    </p>
+
+                    <a
+                        class="primary-btn"
+                        href="{{ url_for('new_entry') }}"
+                    >
+                        Write Your First Entry
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

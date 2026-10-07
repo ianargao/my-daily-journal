@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Entry — My Diary
+{% endblock %}
+
+{% block body %}
+
+<div class="app-shell">
+
+    {% include "_sidebar.html" %}
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>View Entry</h1>
+                <p>Read your saved journal entry.</p>
+            </div>
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                >
+                    <span class="theme-icon">☾</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+
+            </div>
+
+        </header>
+
+        {% include "_flash.html" %}
+
+        <section class="form-card">
+
+            <div class="form-group">
+
+                <label>
+                    Date
+                </label>
+
+                <input
+                    type="text"
+                    value="{{ entry.entry_date|prettydate }}"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    value="{{ entry.title }}"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Mood
+                </label>
+
+                <input
+                    type="text"
+                    value="{{ entry.mood }}"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Your Thoughts
+                </label>
+
+                <textarea
+                    rows="10"
+                    readonly
+                >{{ entry.content }}</textarea>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a
+                    class="secondary-btn"
+                    href="{{ url_for('entries') }}"
+                >
+                    ← Back
+                </a>
+
+
+                <a
+                    class="secondary-btn"
+                    href="{{ url_for('edit_entry', entry_id=entry.entry_id) }}"
+                >
+                    ✎ Edit
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for('delete_entry', entry_id=entry.entry_id) }}"
+                    style="display: inline;"
+                    onsubmit="return confirm('Are you sure you want to delete this entry?');"
+                >
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Delete
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}
