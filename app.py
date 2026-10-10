@@ -7,7 +7,11 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
-
+@app.route("/service-worker.js")
+def service_worker():
+    response = app.send_static_file("service-worker.js")
+    response.headers["Cache-Control"] = "no-cache"
+    return response
 
 
 # ==========================================
